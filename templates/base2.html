@@ -1,3 +1,4 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,14 +11,14 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
   <body>
     <!--/.navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">База обліку студентів</a>
+          <a class="navbar-brand" href="{% url 'students:students_list' %}">База обліку студентів</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -29,43 +30,50 @@
     <!--/.navbar -->
 
     <!-- Main content -->
-    <br><br><br><br>
+    <br><br><br>
       <div class="container">
-        <div class="alert alert-success" role="alert">Групу успішно додано</div>
+        <div class="alert alert-success" role="alert">Студента успішно додано</div>
           <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="../base.html">Студенти</a></li>
-            <li role="presentation"><a href="visiting.html">Відвідування</a></li>
-            <li role="presentation"><a href="groups.html">Групи</a></li>
-            <li role="presentation" class="pull-right"><a href="#">Додати групу</a></li>
+            <li role="presentation" class="active"><a href="{% url 'students:students_list' %}">Студенти</a></li>
+            <li role="presentation"><a href="/journal">Відвідування</a></li>
+            <li role="presentation"><a href="{% url 'students:groups_list' %}">Групи</a></li>
+            <li role="presentation" class="pull-right"><a href="{% url 'students:students_add' %}">Додати студента</a></li>
           </ul>
           <hr>
           <table class="table table-hover table-striped">
             <tr>
                 <td>№</td>
-                <td>Назва</td>
-                <td>Староста</td>
+                <td>Фото</td>
+                <td>Прізвище</td>
+                <td>Ім’я</td>
+                <td>Квиток</td>
+                <td>Група</td>
                 <td>Дія</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td><a href="#" title="Редагувати">ЕС-31</a></td>
-                <td><a href="#" title="Редагувати">Граменко</a></td>
+            {% for student in students %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><img class="img-circle" height="30px" width="30px" src="{% static student.image %}" alt=""></td>
+                <td><a href="{% url 'students:students_edit' student.id %}" title="Редагувати">{{ student.last_name }}</a></td>
+                <td><a href="{% url 'students:students_edit' student.id %}" title="Редагувати">{{ student.first_name }}</a></td>
+                <td>{{ student.ticket }}</td>
+                <td>ЕС-31</td>
                 <td>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Дія <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#">Редагування</a></li>
-                      <li><a href="#">Відвідування</a></li>
-                      <li><a href="#">Видалити</a></li>
+                      <li><a href="{% url 'students:students_edit' student.id %}">Редагування</a></li>
+                      <li><a href="journal/{{ student.id }}/">Відвідування</a></li>
+                      <li><a href="{% url 'students:students_delete' student.id %}">Видалити</a></li>
                     </ul>
                   </li>
                 </td>
-            </tr>
-
+              </tr>
+            {% endfor %}
         </table>
       </div>
-
       <!-- Pagination -->
+
       <nav aria-label="Page navigation" class="center" style="text-align: center">
   <ul class="pagination">
     <li>

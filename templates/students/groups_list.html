@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block meta_title %}Групи{% endblock meta_title %}
+{% block main_content %}
+  <div class="container">
+  {% comment %}
+    <div class="alert alert-success" role="alert">Групу успішно додано</div>
+  {% endcomment %}
+      <ul class="nav nav-pills">
+        <li role="presentation" {% if request.path == "/" %}class="active"{% endif %}><a href="{% url 'students:students_list' %}">Студенти</a></li>
+        <li role="presentation" {% if "/journal" in request.path %}class="active"{% endif %}><a href="/journal">Відвідування</a></li>
+        <li role="presentation" {% if "/groups" in request.path %}class="active"{% endif %}><a href="{% url 'students:groups_list' %}">Групи</a></li>
+        <li role="presentation" class="pull-right"><a href="{% url 'students:students_add' %}">Додати студента</a></li>
+      </ul>
+      <hr>
+      <table class="table table-hover table-striped">
+        <tr>
+            <td>№</td>
+            <td>Назва</td>
+            <td>Староста</td>
+            <td>Дія</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><a href="#" title="Редагувати">ЕС-31</a></td>
+            <td><a href="#" title="Редагувати">Граменко</a></td>
+            <td>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Дія <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Редагування</a></li>
+                  <li><a href="#">Відвідування</a></li>
+                  <li><a href="#">Видалити</a></li>
+                </ul>
+              </li>
+            </td>
+        </tr>
+
+    </table>
+  </div>
+{% endblock main_content %}

@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^students/(?P<sid>\d+)/edit/$', students_edit, name='students_edit'),
     url(r'^students/(?P<sid>\d+)/delete/$', students_delete, name='students_delete'),
     url(r'^journal/$', journal, name='journal'),
-    url(r'^groups/$', groups_list, name='groups_list'),
-    url(r'^groups/add/$', groups_add, name='groups_add'),
-    url(r'^groups/(?P<gid>\d+)/edit/$', groups_edit, name='groups_edit'),
-    url(r'^groups/(?P<gid>\d+)/delete/$', groups_delete, name='groups_delete'),
+    url(r'^groups/$', groups_list, name='group_list'),
+    url(r'^groups/add/$', groups_add, name='group_add'),
+    url(r'^groups/(?P<gid>\d+)/edit/$', groups_edit, name='group_edit'),
+    url(r'^groups/(?P<gid>\d+)/delete/$', groups_delete, name='group_delete'),
 ]

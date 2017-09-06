@@ -1,19 +1,29 @@
+{% if students.has_other_pages %}
+{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
 <nav aria-label="Page navigation" class="center" style="text-align: center">
   <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
+    <li {% if not students.has_previous %}class="disabled"{% endif %}>
+      <a href="{% url 'students:students_list' %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
+{#    <li {% if not students.has_previous %}class="disabled"{% endif %}>#}
+{#      {% if students.has_previous %}#}
+{#        <a href="{% url 'students:students_list' %}?page={{ students.previous_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}"><span aria-hidden="true">&lsaquo;</span></a>#}
+{#      {% endif %}#}
+{#    </li>#}
+    {% for current_page in students.paginator.page_range %}
+      <li {% if students.number == current_page %}class="active" {% endif %}>
+        <a href="{% url 'students:students_list' %}?page={{ current_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ current_page }}</a>
+      </li>
+    {% endfor %}
+{#    <li {% #}
+    <li {%if not students.has_next %}class="disabled"{% endif %}>
+      <a href="{% url 'students:students_list' %}?page={{ students.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
   </ul>
 </nav>
+{% endwith %}
+{% endif %}

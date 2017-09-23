@@ -8,16 +8,20 @@
       </a>
     </li>
 {#    <li {% if not students.has_previous %}class="disabled"{% endif %}>#}
-{#      {% if students.has_previous %}#}
-{#        <a href="{% url 'students:students_list' %}?page={{ students.previous_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}"><span aria-hidden="true">&lsaquo;</span></a>#}
-{#      {% endif %}#}
+{#      <a href="{% url 'students:students_list' %}?page={{ students.previous_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Previous">#}
+{#        <span aria-hidden="true">&lsaquo;</span>#}
+{#      </a>#}
 {#    </li>#}
     {% for current_page in students.paginator.page_range %}
       <li {% if students.number == current_page %}class="active" {% endif %}>
         <a href="{% url 'students:students_list' %}?page={{ current_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ current_page }}</a>
       </li>
     {% endfor %}
-{#    <li {% #}
+{#    <li {%if not students.has_next %}class="disabled"{% endif %}>#}
+{#      <a href="{% url 'students:students_list' %}?page={{ students.next_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Next">#}
+{#        <span aria-hidden="true">&rsaquo;</span>#}
+{#      </a>#}
+{#    </li>#}
     <li {%if not students.has_next %}class="disabled"{% endif %}>
       <a href="{% url 'students:students_list' %}?page={{ students.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

@@ -36,3 +36,17 @@ class Group(models.Model):
         verbose_name = u'Група'
         verbose_name_plural = u'Групи'
         # ordering = ['title']
+
+
+class Testing(models.Model):
+    name = models.CharField(max_length=255, blank=False, null=False, verbose_name=u'Назва іспиту')
+    date = models.DateField(blank=True, null=True, verbose_name=u'Дата іспиту')
+    teacher = models.CharField(max_length=255, blank=False, null=False, verbose_name=u'Викладач')
+    testing_group = models.ForeignKey('Group', blank=False, null=False, verbose_name=u'Група до іспиту')
+
+    class Meta:
+        verbose_name = u'Іспит'
+        verbose_name_plural = u'Іспити'
+
+    def __unicode__(self):
+        return self.name

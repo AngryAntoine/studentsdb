@@ -141,3 +141,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(path.dirname(BASE_DIR), 'media_cdn')
 
 PORTAL_URL = 'http://localhost:8000'
+
+ADMIN_EMAIL = 'antongramenko@gmail.com'

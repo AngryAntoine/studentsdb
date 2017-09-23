@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load static from staticfiles %}
+{% block meta_title %}Зв'язок з адміністратором{% endblock meta_title %}
+{% block main_content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      {% if request.GET.status_message %}
+        <div class="alert alert-warning" role="alert">
+          {{request.GET.status_message}}
+        </div>
+      {% endif %}
+      <ol class="breadcrumb">
+        <li><a href="{% url 'students:students_list' %}">Студенти</a></li>
+        <li><a href="{% url 'students:contact_admin' %}">Зв'язок з адміністратором</a></li>
+      </ol>
+        <form enctype="multipart/form-data" method="post" name="contact_admin_form" action="{% url 'students:contact_admin' %}">
+            {% csrf_token %}
+            {{ form | bootstrap }}
+            <button type="submit" name="send_button" class="btn btn-primary">Надіслати</button>
+            <button type="submit" name="cancel_button" class="btn btn-warning pull-right">Скасувати</button>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock main_content %}

@@ -4,8 +4,12 @@
       <a class="navbar-brand" href="{% url 'students:students_list' %}">База обліку студентів</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Кабінет</a></li>
+        <li><a href="{% url 'students:contact_admin' %}">Зв'язок з адміністратором</a></li>
+      </ul>
       <form class="navbar-form navbar-right">
-        <button type="submit" class="btn btn-success">Кабінет</button>
+        <input type="text" class="form-control" placeholder="Пошук...">
       </form>
     </div>
   </div>

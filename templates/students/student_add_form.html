@@ -1,86 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name=”description” value="Система Обліку Студентів Навчального Закладу">
-    <title>Сервіс обліку студентів</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/main.css">
-  </head>
-  <body>
-    <!--/.navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="../../templates/base.html">База обліку студентів</a>
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% block meta_title %}Іспити{% endblock meta_title %}
+{% block main_content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      {% if errors %}
+        <div class="alert alert-warning" role="alert">
+          Будь ласка, виправте помилки в формі
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
-            <button type="submit" class="btn btn-success">Кабінет</button>
-          </form>
-        </div>
-      </div>
-    </nav>
-    <!--/navbar -->
-    <br><br><br><br><br>
-    <!-- Main content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <form>
-                  <div class="form-group">
-                    <label for="exampleInputName">Ім`я</label>
-                    <input type="email" class="form-control" id="exampleInputName" placeholder="Ім`я">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPatronimic">По-батькові</label>
-                    <input type="email" class="form-control" id="exampleInputPatronimic" placeholder="По-батькові">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputSurname">Прізвище</label>
-                    <input type="email" class="form-control" id="exampleInputSurname" placeholder="Прізвище">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputTicketNumber">№ білету</label>
-                    <input type="email" class="form-control" id="exampleInputTicketNumber" placeholder="№ білету">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputBirthDate">Дата народження</label>
-                    <input type="password" class="form-control" id="exampleInputBirthDate" placeholder="Дата народження">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">Файл</label>
-                    <input type="file" id="exampleInputFile">
-                    <p class="help-block">Натисніть кнопку для вибору фото студента</p>
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control" rows="3" ></textarea>
-                  </div>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox">Увійти в кабінет
-                    </label>
-                  </div>
-                  <button type="submit" class="btn btn-success">Додати</button>
-                  <button type="submit" class="btn btn-danger">Скасувати</button>
-                </form>
-            </div>
-    <br><br><br>
-        </div>
-
-    <br><br><br>    </div>
-
-    <!-- /Main content -->
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </body>
-</html>
+      {% endif %}
+        <ol class="breadcrumb">
+          <li><a href="{% url 'students:students_list' %}">Студенти</a></li>
+          <li><a href="{% url 'students:student_add' %}">Додати студента</a></li>
+        </ol>
+        <form class="form-horizontal" enctype="multipart/form-data" method="post" name="student_add_form" action="{% url 'students:student_add' %}">
+          {% csrf_token %}
+          <div class="form-group {% if errors.first_name %}has-error{% endif %}">
+            <label for="first_name" class="col-sm-4 control_label">Ім`я *</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ request.POST.first_name }}" placeholder="Ім`я">
+            <span class="help-block">{{ errors.first_name }}</span>
+          </div>
+          <div class="form-group">
+            <label for="middle_name" class="col-sm-4 control_label">По-батькові</label>
+            <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ request.POST.middle_name }}"  placeholder="По-батькові">
+            <span class="help-block">{{ errors.middle_name }}</span>
+          </div>
+          <div class="form-group {% if errors.last_name %}has-error{% endif %}">
+            <label for="last_name" class="col-sm-4 control_label">Прізвище *</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ request.POST.last_name }}"  placeholder="Прізвище">
+            <span class="help-block">{{ errors.last_name }}</span>
+          </div>
+          <div class="form-group {% if errors.birthday %}has-error{% endif %}">
+            <label for="birthday" class="col-sm-4 control_label">Дата народження *</label>
+            <input type="text" class="form-control" id="birthday" name="birthday" value="{{ request.POST.birthday }}"  placeholder="Напр. 1986-02-21">
+            <span class="help-block">{{ errors.birthday }}</span>
+          </div>
+          <div class="form-group {% if errors.ticket %}has-error{% endif %}">
+            <label for="ticket" class="col-sm-4 control_label">№ білету *</label>
+            <input type="text" class="form-control" id="ticket" name="ticket" value="{{ request.POST.ticket }}"  placeholder="№ білету">
+            <span class="help-block">{{ errors.ticket }}</span>
+          </div>
+          <div class="form-group {% if errors.student_group %}has-error{% endif %}">
+            <label for="student_group" class="col-sm-4 control_label">Група *</label>
+              <select name="student_group" id="student_group">
+                <option value="">Виберіть групу</option>
+                  {% for group in groups %}
+                    <option value="{{ group.id }}" {% if group.id == request.POST.student_group|add:0 %} selected="1"{% endif %}>{{ group.title }}</option>
+                  {% endfor %}
+              </select>
+            <span class="help-block">{{ errors.student_group }}</span>
+          </div>
+          <div class="form-group">
+            <label for="photo">Файл</label>
+            <input type="file" id="photo" name="photo">
+            <p class="help-block">Натисніть кнопку для вибору фото студента</p>
+          </div>
+          <div class="form-group">
+            <label for="notes">Додаткові нотатки</label>
+            <textarea name="notes" id="notes" class="form-control" rows="3" ></textarea>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox">Увійти в кабінет
+            </label>
+          </div>
+          <br>
+          <div>
+            <button type="submit" name="add_button" class="btn btn-primary">Додати</button>
+            <button type="submit" name="cancel_button" class="btn btn-link">Скасувати</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock main_content %}

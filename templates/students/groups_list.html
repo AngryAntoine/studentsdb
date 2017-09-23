@@ -2,18 +2,15 @@
 {% load static from staticfiles %}
 {% block meta_title %}Групи{% endblock meta_title %}
 {% block main_content %}
-  <div class="container">
-  {% comment %}
-    <div class="alert alert-success" role="alert">Групу успішно додано</div>
-  {% endcomment %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      {% comment %}
+        <div class="alert alert-success" role="alert">Групу успішно додано</div>
+      {% endcomment %}
       <hr>
         {% include 'includes/navbar_buttons.html' %}
       <hr>
-{#      <select name="select_qty" id="">#}
-{#          <option value="1">1</option>#}
-{#          <option value="2">2</option>#}
-{#          <option value="3">3</option>#}
-{#      </select>#}
       <table class="table table-hover table-striped">
         {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
           <tr>
@@ -53,38 +50,39 @@
             </td>
           </tr>
         {% endfor %}
-    </table>
+      </table>
+    </div>
   </div>
-{% if groups.has_other_pages %}
-{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
-<nav aria-label="Page navigation" class="center" style="text-align: center">
-  <ul class="pagination">
-    <li {% if not groups.has_previous %}class="disabled"{% endif %}>
-      <a href="{% url 'students:group_list' %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-{#    <li {% if not students.has_previous %}class="disabled"{% endif %}>#}
-{#      {% if students.has_previous %}#}
-{#        <a href="{% url 'students:students_list' %}?page={{ students.previous_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}"><span aria-hidden="true">&lsaquo;</span></a>#}
-{#      {% endif %}#}
-{#    </li>#}
-    {% for current_page in groups.paginator.page_range %}
-      <li {% if groups.number == current_page %}class="active" {% endif %}>
-        <a href="{% url 'students:group_list' %}?page={{ current_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ current_page }}</a>
-      </li>
-    {% endfor %}
-{#    <li {% #}
-    <li {%if not groups.has_next %}class="disabled"{% endif %}>
-      <a href="{% url 'students:group_list' %}?page={{ groups.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-{% endwith %}
-{% endif %}
+</div>
+<div class="custom-pagination">
+  {% if groups.has_other_pages %}
+    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+    <nav aria-label="Page navigation" class="center" style="text-align: center">
+      <ul class="pagination">
+        <li {% if not groups.has_previous %}class="disabled"{% endif %}>
+          <a href="{% url 'students:group_list' %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+    {#    <li {% if not students.has_previous %}class="disabled"{% endif %}>#}
+    {#      {% if students.has_previous %}#}
+    {#        <a href="{% url 'students:students_list' %}?page={{ students.previous_page_number }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}"><span aria-hidden="true">&lsaquo;</span></a>#}
+    {#      {% endif %}#}
+    {#    </li>#}
+        {% for current_page in groups.paginator.page_range %}
+          <li {% if groups.number == current_page %}class="active" {% endif %}>
+            <a href="{% url 'students:group_list' %}?page={{ current_page }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ current_page }}</a>
+          </li>
+        {% endfor %}
+    {#    <li {% #}
+        <li {%if not groups.has_next %}class="disabled"{% endif %}>
+          <a href="{% url 'students:group_list' %}?page={{ groups.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% endwith %}
+  {% endif %}
+</div>
 {% endblock main_content %}
-{#{% block footer %}#}
-{#  {% include 'includes/pagination.html' %}#}
-{#{% endblock footer %}#}

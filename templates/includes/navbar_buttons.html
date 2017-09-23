@@ -2,5 +2,6 @@
   <li role="presentation" {% if request.path == "/" %}class="active"{% endif %}><a href="{% url 'students:students_list' %}">Студенти</a></li>
   <li role="presentation" {% if "/journal" in request.path %}class="active"{% endif %}><a href="{% url 'students:journal' %}">Відвідування</a></li>
   <li role="presentation" {% if "/groups" in request.path %}class="active"{% endif %}><a href="{% url 'students:group_list' %}">Групи</a></li>
-  <li role="presentation" class="pull-right"><a href="{% if request.path == "/" %}{% url 'students:students_add' %}{% elif "/groups" in request.path %}{% url 'students:group_add' %}{% endif %}">Додати {% block to_add_identifier %}{% endblock to_add_identifier %}</a></li>
+  <li role="presentation" {% if "/testing" in request.path %}class="active"{% endif %}><a href="{% url 'students:testing' %}">Іспити</a></li>
+  <li role="presentation" class="pull-right"><a href="{% if request.path == "/" %}{% url 'students:student_add' %}{% elif "/groups" in request.path %}{% url 'students:group_add' %}{% endif %}">Додати {% if request.path == "/" %} студента{% elif "/groups" in request.path %} групу{% endif %}</a></li>
 </ul>
